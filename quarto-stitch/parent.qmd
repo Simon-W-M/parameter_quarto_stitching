@@ -1,0 +1,74 @@
+---
+title: "Demo report for `r params$cyl` cylinders"
+format: html
+editor: visual
+params:
+  child_a: TRUE
+  child_b: TRUE
+  cyl: 4
+---
+
+## Main document
+
+### Stichin' together modular reports in quarto.
+
+A really nice way to be able to collaborate and build things on completely separate data sets.
+
+Of course there may be shared functions, but perhaps these could also be put into a separate file.
+
+So this is all the main document.  
+
+We then call a version of the basic quarto report.  All I have done is remove the YAML header.
+
+
+
+# REPORT SECTIONS
+
+
+```{r}
+#| output: asis
+#| echo: false
+if (params$child_a) { 
+  
+  cat(sep = "\n",
+      knitr::knit_child(quiet = TRUE,
+                        text = readr::read_file("child_a.qmd")
+      )
+  )
+  
+}
+```
+
+
+```{r}
+#| output: asis
+#| echo: false
+
+
+if (params$child_b) { 
+  
+  cat(sep = "\n",
+      knitr::knit_child(quiet = TRUE,
+                        text = readr::read_file("child_b.qmd")
+      )
+  )
+  
+}
+
+
+
+```
+
+## Back to parent report
+
+This is back to the parent report and blah blah blah.
+
+It is worth noting that each child report is a self contained environment.  Data does not flow from one to another.  Libraries and functions have to be called in each child.
+
+Whilst in some ways that is a bit of a pain, it does mean that we are only calling what is needed within that child and if that child is 'not required', the whole section of the pipeline is skipped.  
+
+This would also mean that we do not have to worry about cross contamination of variable names or conflicts.
+
+It would make sense to have one list of called libraries and a shared code of functions. Thus any task such as wrangling short names, population standardisation or whatever can be shared.
+
+

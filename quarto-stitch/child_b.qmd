@@ -1,0 +1,29 @@
+
+```{r}
+#| echo: false
+#| warning: false
+library(gt)
+library(tidyverse)
+```
+
+## Child report B
+
+
+This is the second report which creates a table for **`r params$cyl` cylinders**
+
+```{r}
+#| echo: false
+#| warning: false
+
+mtcars |> 
+  filter(cyl == params$cyl) |>
+  head() |> 
+  gt() |>
+  data_color(
+    columns = cyl,
+    palette = "green"
+  )
+  
+```
+
+

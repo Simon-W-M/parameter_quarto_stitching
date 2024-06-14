@@ -1,0 +1,35 @@
+
+```{r}
+#| echo: false
+#| warning: false
+library(gt)
+library(tidyverse)
+
+# this is calling the data from another r source
+source('data.R')
+```
+
+## Child report A
+
+Just checking below that the same parameter is pulled through
+
+```{r}
+params$cyl
+```
+
+The data for this table is sourced from another R script.
+
+This means we can have separate scripts to the reporting process.
+
+We could also create separate r script for functions,  if well documented, we could reuse plots and table across the report, to maintain a consistent look and feel.
+
+```{r}
+#| echo: false
+ data_sw |>
+   dplyr::select(1:5) |>
+   head() |>
+   gt()
+
+```
+
+
